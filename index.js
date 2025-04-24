@@ -26,15 +26,29 @@ window.onload = () => {
     const gameCanvas = document.getElementById("gameCanvas");
     const ctx = gameCanvas.getContext("2d");
 
-    // Assign these globally so other functions can use them
+    // Assign globally so other functions can use them
     window.ctx = ctx;
     window.gameCanvas = gameCanvas;
 
-    document.addEventListener("keydown", changeDirection);
-    createFood();
-    main();
+    // Wait for a key press to start the game
+    document.addEventListener("keydown", handleInitialKeyPress);
 };
 
+// Handle the first key press to start the game
+function handleInitialKeyPress(event) {
+    // Remove this listener and start the game
+    document.removeEventListener("keydown", handleInitialKeyPress);
+
+    // Start listening to direction keys
+    document.addEventListener("keydown", changeDirection);
+
+    // Hide the start message
+    const startMessage = document.getElementById("startMessage");
+    if (startMessage) startMessage.style.display = "none";
+
+    createFood();
+    main();
+}
 
 // Start the game loop
 function main() {
